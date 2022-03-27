@@ -2,21 +2,43 @@
   "name": "auth-example",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "npx concurrently \"next dev\" \"npm run watch\"",
+    "build": "npm run watch:css && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "watch:css": "npx tailwindcss -i src/tailwind.css -o src/index.css",
+    "watch": "npm run watch:css -- --watch"
   },
   "dependencies": {
+    "@types/recoil": "0.0.9",
+    "firebase": "^9.5.0",
     "next": "12.0.4",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "recoil": "^0.5.2"
   },
   "devDependencies": {
     "@types/node": "16.11.10",
     "@types/react": "17.0.37",
+    "autoprefixer": "^10.4.0",
     "eslint": "7.32.0",
     "eslint-config-next": "12.0.4",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.1.2",
+    "postcss-cli": "^8.3.1",
+    "prettier": "^2.5.0",
+    "tailwindcss": "^2.2.19",
     "typescript": "4.5.2"
+  },
+  "license": "MIT",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
+    ]
   }
 }
